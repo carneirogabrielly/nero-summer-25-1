@@ -58,7 +58,7 @@ def get_serper_results(queries: List[str],
     search = GoogleSerperAPIWrapper(gl=gl,
                                     hl=hl,
                                     k=k, 
-                                    type=type_content) # type: Literal['news', 'search', 'places', 'images'] = 'search'
+                                    type=type_content) ###type: Literal['news', 'search', 'places', 'images'] = 'search'
     
     results = [search.results(query) for query in queries]
     return results
@@ -83,6 +83,10 @@ def get_serper_with_scrapping(queries: List[str],
     - List of results from the search
     """
     
+    requests_kwargs = {
+    'timeout': 5  # Definindo o timeout para 5 segundos
+    }
+    
     results = get_serper_results(queries, 
                                  k, 
                                  type_content, 
@@ -97,7 +101,8 @@ def get_serper_with_scrapping(queries: List[str],
         for i in range(len(news)):
             n = news[i]
             link = n['link']
-            loader = WebBaseLoader(web_paths=[link])
+            loader = WebBaseLoader(web_paths=[link],
+                                    requests_kwargs=requests_kwargs)
             docs = loader.load()
             news[i]['content'] = "\n".join([x.page_content for x in docs])
         
