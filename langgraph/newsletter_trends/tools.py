@@ -101,9 +101,12 @@ def get_serper_with_scrapping(queries: List[str],
         for i in range(len(news)):
             n = news[i]
             link = n['link']
-            loader = WebBaseLoader(web_paths=[link],
-                                    requests_kwargs=requests_kwargs)
-            docs = loader.load()
+            try:
+                loader = WebBaseLoader(web_paths=[link],
+                                        requests_kwargs=requests_kwargs)
+                docs = loader.load()
+            except:
+                docs = []
             news[i]['content'] = "\n".join([x.page_content for x in docs])
         
         dict_results_news[q] = news

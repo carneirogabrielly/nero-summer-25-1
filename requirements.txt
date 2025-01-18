@@ -16,3 +16,5 @@ streamlit
 pytrends
 langgraph
 beautifulsoup4
+fastapi
+uvicorn

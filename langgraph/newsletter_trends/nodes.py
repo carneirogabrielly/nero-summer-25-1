@@ -1,4 +1,4 @@
-from IPython.display import Markdown
+from IPython.display import Markdown, display
 from .state import GraphState
 from .tools import *
 from .chains import *
